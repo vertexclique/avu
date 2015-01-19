@@ -207,7 +207,7 @@ int main() {
 	while(0xFADE) {
 		send_tricky_request(targetdns, sarcastic, basedomain);
 		build_believable_responses(sarcastic, authoritativedns, targetdns, spoofeddns, claimeddomain, attackport);
-		checker_request(targetdns, sarcastic, basedomain, targetip);
+		//checker_request(targetdns, sarcastic, basedomain, targetip);
 	}
 
 	return 0;
