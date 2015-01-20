@@ -129,7 +129,7 @@ bool build_believable_responses(std::string sarcasm, std::string author_dns, std
 		authority_field.dname(basedomain);
 		authority_field.ttl(ttl_val);
 		authority_field.query_class(DNS::IN);
-		authority_field.data("ns1.google.com\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00");
+		authority_field.data("ns1.google.com\x03ns1.google.com");
 
 		resp_pkt.rfind_pdu<DNS>().add_authority( authority_field );
 

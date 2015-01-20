@@ -1,0 +1,1 @@
+g++ crafter.cxx -o craft -lcrafter -std=gnu++11
